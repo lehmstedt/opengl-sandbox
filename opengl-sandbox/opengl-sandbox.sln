@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "opengl-sandbox", "opengl-sandbox\opengl-sandbox.vcxproj", "{E24988C9-2D72-4B9A-B7C6-1164FC13CDDE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E24988C9-2D72-4B9A-B7C6-1164FC13CDDE}.Debug|x64.ActiveCfg = Debug|x64
+		{E24988C9-2D72-4B9A-B7C6-1164FC13CDDE}.Debug|x64.Build.0 = Debug|x64
+		{E24988C9-2D72-4B9A-B7C6-1164FC13CDDE}.Debug|x86.ActiveCfg = Debug|x64
+		{E24988C9-2D72-4B9A-B7C6-1164FC13CDDE}.Debug|x86.Build.0 = Debug|x64
+		{E24988C9-2D72-4B9A-B7C6-1164FC13CDDE}.Release|x64.ActiveCfg = Release|x64
+		{E24988C9-2D72-4B9A-B7C6-1164FC13CDDE}.Release|x64.Build.0 = Release|x64
+		{E24988C9-2D72-4B9A-B7C6-1164FC13CDDE}.Release|x86.ActiveCfg = Release|Win32
+		{E24988C9-2D72-4B9A-B7C6-1164FC13CDDE}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {29664CE3-A290-4D24-9277-E310C3C6DD24}
+	EndGlobalSection
+EndGlobal
