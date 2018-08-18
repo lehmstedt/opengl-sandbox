@@ -1,15 +1,12 @@
 #pragma once
-
-#include <GL/glut.h>
-class GlutUtils
+class Renderer
 {
 public:
-	GlutUtils();
+	Renderer();
+	~Renderer();
 	static void Init(int argc, char **argv);
-	~GlutUtils();
 
 private:
 	static void Render();
-	
 };
 

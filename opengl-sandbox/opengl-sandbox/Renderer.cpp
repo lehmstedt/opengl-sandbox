@@ -1,12 +1,17 @@
 #include "pch.h"
-#include "GlutUtils.h"
+#include "Renderer.h"
 
 
-GlutUtils::GlutUtils()
+Renderer::Renderer()
 {
 }
 
-void GlutUtils::Init(int argc, char **argv)
+
+Renderer::~Renderer()
+{
+}
+
+void Renderer::Init(int argc, char ** argv)
 {
 	//initialisation de glut
 	glutInit(&argc, argv);
@@ -20,17 +25,17 @@ void GlutUtils::Init(int argc, char **argv)
 	glutCreateWindow("OpenGL Sandbox");
 
 	glutDisplayFunc(Render);
+
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+	
+
 }
 
-
-GlutUtils::~GlutUtils()
-{
-}
-
-void GlutUtils::Render()
+void Renderer::Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-	
+
 
 	//activation de l'attribut 0 des sommets (c'est à dire leur position)
 	glEnableVertexAttribArray(0);

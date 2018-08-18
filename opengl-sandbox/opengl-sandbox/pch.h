@@ -14,7 +14,8 @@
 #include <iostream>
 #include <GL/glut.h>
 #include "math_3d.h"
-#include "GlutUtils.h"
+#include "Renderer.h"
+#include "GeometryUtils.h"
 
 
 #endif //PCH_H
