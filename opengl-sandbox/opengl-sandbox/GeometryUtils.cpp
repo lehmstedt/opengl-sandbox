@@ -11,7 +11,7 @@ GeometryUtils::~GeometryUtils()
 {
 }
 
-void GeometryUtils::CreatePoints(Vector3f * vertices)
+void GeometryUtils::CreatePoints(Vector3f * vertices, int number)
 {
 	
 
@@ -23,5 +23,5 @@ void GeometryUtils::CreatePoints(Vector3f * vertices)
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
 	//remplit le buffer avec les données de structure Vector3f
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 3 * sizeof(vertices), vertices, GL_STATIC_DRAW);
 }

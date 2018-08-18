@@ -13,7 +13,13 @@ int main(int argc, char ** argv)
 		return 1;
 	}
 
-	GeometryUtils::CreatePoint(0.0f, 0.0f, 0.0f);
+	//structure de donnees pour creer un point au milieu de l'ecran
+	Vector3f vertices[3];
+	vertices[0] = Vector3f(-1.0f, -1.0f, 0.0f);
+	vertices[1] = Vector3f(1.0f, -1.0f, 0.0f);
+	vertices[2] = Vector3f(0.0f, 1.0f, 0.0f);
+
+	GeometryUtils::CreatePoints(vertices, 3);
 
 	
 	glutMainLoop();
