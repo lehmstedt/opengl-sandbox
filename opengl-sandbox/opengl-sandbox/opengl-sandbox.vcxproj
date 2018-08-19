@@ -177,6 +177,7 @@
     <ClInclude Include="math_3d.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="ShaderUtils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GeometryUtils.cpp" />
@@ -188,6 +189,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="ShaderUtils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="exemple.frag" />
+    <None Include="exemple.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -12,10 +12,14 @@
 // TODO: Ajoutez les en-têtes à précompiler ici
 #include <GL/glew.h>
 #include <iostream>
+#include <string>
+#include <fstream>
+
 #include <GL/glut.h>
 #include "math_3d.h"
 #include "Renderer.h"
 #include "GeometryUtils.h"
+#include "ShaderUtils.h"
 
 
 #endif //PCH_H
