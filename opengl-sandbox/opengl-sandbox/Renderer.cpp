@@ -2,6 +2,7 @@
 #include "Renderer.h"
 
 float Renderer::m_scale = 0.0f;
+Matrix4f Renderer::m_world;
 
 Renderer::Renderer()
 {
@@ -34,10 +35,12 @@ void Renderer::Init(int argc, char ** argv)
 
 void Renderer::Render()
 {
-	//affectation d'une variable uniforme du vertex shader à partir de sinf(m_scale)
-	GLint gScaleLocation = ShaderUtils::GetUniformLocation("gScale");
 	m_scale += 0.001;
-	glUniform1f(gScaleLocation, sinf(m_scale));
+	SetWorldMatrix();
+
+	GLuint gWorldLocation = ShaderUtils::GetUniformLocation("gWorld");
+
+	glUniformMatrix4fv(gWorldLocation, 1, GL_TRUE, &m_world.m[0][0]);
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
@@ -53,4 +56,12 @@ void Renderer::Render()
 	glDisableVertexAttribArray(0);
 
 	glutSwapBuffers();
+}
+
+void Renderer::SetWorldMatrix()
+{
+	m_world.m[0][0] = 1.0f; m_world.m[0][1] = 0.0f; m_world.m[0][2] = 0.0f; m_world.m[0][3] = sinf(m_scale);
+	m_world.m[1][0] = 0.0f; m_world.m[1][1] = 1.0f; m_world.m[1][2] = 0.0f; m_world.m[1][3] = 0.0f;
+	m_world.m[2][0] = 0.0f; m_world.m[2][1] = 0.0f; m_world.m[2][2] = 1.0f; m_world.m[2][3] = 0.0f;
+	m_world.m[3][0] = 0.0f; m_world.m[3][1] = 0.0f; m_world.m[3][2] = 0.0f; m_world.m[3][3] = 1.0f;
 }
