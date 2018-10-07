@@ -50,6 +50,12 @@ void ShaderUtils::UseShaderProgram()
 	glUseProgram(m_shaderProgram);
 }
 
+GLint ShaderUtils::GetUniformLocation(const char * varname)
+{
+	return glGetUniformLocation(m_shaderProgram, varname);
+}
+
+
 void ShaderUtils::CreateShader(GLint shaderType, const char * filename)
 {
 	GLuint vertexShader = glCreateShader(shaderType);

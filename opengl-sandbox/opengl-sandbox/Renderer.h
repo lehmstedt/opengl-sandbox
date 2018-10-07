@@ -8,5 +8,6 @@ public:
 
 private:
 	static void Render();
+	static float m_scale;
 };
 

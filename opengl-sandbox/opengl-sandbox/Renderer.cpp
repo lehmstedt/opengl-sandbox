@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Renderer.h"
 
+float Renderer::m_scale = 0.0f;
 
 Renderer::Renderer()
 {
@@ -25,15 +26,19 @@ void Renderer::Init(int argc, char ** argv)
 	glutCreateWindow("OpenGL Sandbox");
 
 	glutDisplayFunc(Render);
+	glutIdleFunc(Render);
 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-
-	
 
 }
 
 void Renderer::Render()
 {
+	//affectation d'une variable uniforme du vertex shader à partir de sinf(m_scale)
+	GLint gScaleLocation = ShaderUtils::GetUniformLocation("gScale");
+	m_scale += 0.001;
+	glUniform1f(gScaleLocation, sinf(m_scale));
+
 	glClear(GL_COLOR_BUFFER_BIT);
 
 
