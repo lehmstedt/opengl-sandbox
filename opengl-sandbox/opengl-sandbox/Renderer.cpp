@@ -51,7 +51,7 @@ void Renderer::Render()
 	//interprétation des données dans le tampon par le pipeline
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+	glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, 0);
 
 	glDisableVertexAttribArray(0);
 
@@ -60,8 +60,8 @@ void Renderer::Render()
 
 void Renderer::SetWorldMatrix()
 {
-	m_world.m[0][0] = sinf(m_scale); m_world.m[0][1] = 0.0f;        m_world.m[0][2] = 0.0f;        m_world.m[0][3] = 0.0f;
-	m_world.m[1][0] = 0.0f;        m_world.m[1][1] = sinf(m_scale); m_world.m[1][2] = 0.0f;        m_world.m[1][3] = 0.0f;
-	m_world.m[2][0] = 0.0f;        m_world.m[2][1] = 0.0f;        m_world.m[2][2] = sinf(m_scale); m_world.m[2][3] = 0.0f;
+	m_world.m[0][0] = 1.0f;		m_world.m[0][1] = 0.0f;        m_world.m[0][2] = 0.0f;        m_world.m[0][3] = sinf(m_scale);
+	m_world.m[1][0] = 0.0f;        m_world.m[1][1] = 1.0f; m_world.m[1][2] = 0.0f;        m_world.m[1][3] = 0.0f;
+	m_world.m[2][0] = 0.0f;        m_world.m[2][1] = 0.0f;        m_world.m[2][2] = 1.0f; m_world.m[2][3] = sinf(m_scale);
 	m_world.m[3][0] = 0.0f;        m_world.m[3][1] = 0.0f;        m_world.m[3][2] = 0.0f;        m_world.m[3][3] = 1.0f;
 }
