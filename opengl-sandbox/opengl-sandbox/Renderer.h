@@ -9,7 +9,5 @@ public:
 private:
 	static void Render();
 	static float m_scale;
-	static Matrix4f m_world;
-	static void SetWorldMatrix();
 };
 

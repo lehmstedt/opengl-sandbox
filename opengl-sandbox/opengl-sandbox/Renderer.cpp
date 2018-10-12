@@ -2,7 +2,6 @@
 #include "Renderer.h"
 
 float Renderer::m_scale = 0.0f;
-Matrix4f Renderer::m_world;
 
 Renderer::Renderer()
 {
@@ -21,7 +20,7 @@ void Renderer::Init(int argc, char ** argv)
 	//configuration en double buffering et mode de couleur rgba
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
 
-	//paramètres de la fenêtre
+	//paramï¿½tres de la fenï¿½tre
 	glutInitWindowSize(1024, 768);
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow("OpenGL Sandbox");
@@ -36,19 +35,22 @@ void Renderer::Init(int argc, char ** argv)
 void Renderer::Render()
 {
 	m_scale += 0.001;
-	SetWorldMatrix();
 
 	GLuint gWorldLocation = ShaderUtils::GetUniformLocation("gWorld");
 
-	glUniformMatrix4fv(gWorldLocation, 1, GL_TRUE, &m_world.m[0][0]);
+	Pipeline p;
+	p.Scale(sinf(m_scale * 0.1f), sinf(m_scale * 0.1f), sinf(m_scale * 0.1f));
+	p.WorldPos(sinf(m_scale), sinf(m_scale), sinf(m_scale));
+	p.Rotate(sinf(m_scale) * 90.0f, sinf(m_scale) * 90.0f, sinf(m_scale) * 90.0f);
+	glUniformMatrix4fv(gWorldLocation, 1, GL_TRUE, (const GLfloat*)p.GetTrans());
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
 
-	//activation de l'attribut 0 des sommets (c'est à dire leur position)
+	//activation de l'attribut 0 des sommets (c'est ï¿½ dire leur position)
 	glEnableVertexAttribArray(0);
 
-	//interprétation des données dans le tampon par le pipeline
+	//interprï¿½tation des donnï¿½es dans le tampon par le pipeline
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
 	glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, 0);
@@ -58,10 +60,3 @@ void Renderer::Render()
 	glutSwapBuffers();
 }
 
-void Renderer::SetWorldMatrix()
-{
-	m_world.m[0][0] = 1.0f;		m_world.m[0][1] = 0.0f;        m_world.m[0][2] = 0.0f;        m_world.m[0][3] = sinf(m_scale);
-	m_world.m[1][0] = 0.0f;        m_world.m[1][1] = 1.0f; m_world.m[1][2] = 0.0f;        m_world.m[1][3] = 0.0f;
-	m_world.m[2][0] = 0.0f;        m_world.m[2][1] = 0.0f;        m_world.m[2][2] = 1.0f; m_world.m[2][3] = sinf(m_scale);
-	m_world.m[3][0] = 0.0f;        m_world.m[3][1] = 0.0f;        m_world.m[3][2] = 0.0f;        m_world.m[3][3] = 1.0f;
-}

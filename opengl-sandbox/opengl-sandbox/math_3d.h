@@ -15,6 +15,9 @@
 #ifndef MATH_3D_H
 #define	MATH_3D_H
 
+#define ToRadian(x) ((x) * M_PI / 180.0f)
+#define ToDegree(x) ((x) * 180.0f / M_PI)
+
 
 struct Vector3f
 {
@@ -36,6 +39,22 @@ struct Vector3f
 
 struct Matrix4f {
 	float m[4][4];
+
+	inline Matrix4f operator*(const Matrix4f& Right) const
+	{
+		Matrix4f Ret;
+		for (unsigned int i = 0; i < 4; i++) {
+			for (unsigned int j = 0; j < 4; j++) {
+				Ret.m[i][j] = m[i][0] * Right.m[0][j] +
+					m[i][1] * Right.m[1][j] +
+					m[i][2] * Right.m[2][j] +
+					m[i][3] * Right.m[3][j];
+			}
+		}
+
+		return Ret;
+	}
 };
+
 
 #endif	/* MATH_3D_H */

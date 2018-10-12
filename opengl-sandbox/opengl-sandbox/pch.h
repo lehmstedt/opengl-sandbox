@@ -20,6 +20,7 @@
 #include "Renderer.h"
 #include "GeometryUtils.h"
 #include "ShaderUtils.h"
+#include "Pipeline.h"
 
 
 #endif //PCH_H
