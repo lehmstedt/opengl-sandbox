@@ -1,6 +1,9 @@
 #include "pch.h"
 #include "Renderer.h"
 
+#define WINDOW_WIDTH 1920
+#define WINDOW_HEIGHT 1080
+
 float Renderer::m_scale = 0.0f;
 
 Renderer::Renderer()
@@ -21,8 +24,8 @@ void Renderer::Init(int argc, char ** argv)
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
 
 	//param�tres de la fen�tre
-	glutInitWindowSize(1024, 768);
-	glutInitWindowPosition(100, 100);
+	glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+	glutInitWindowPosition(0, 0);
 	glutCreateWindow("OpenGL Sandbox");
 
 	glutDisplayFunc(Render);
@@ -39,9 +42,10 @@ void Renderer::Render()
 	GLuint gWorldLocation = ShaderUtils::GetUniformLocation("gWorld");
 
 	Pipeline p;
-	p.Scale(sinf(m_scale * 0.1f), sinf(m_scale * 0.1f), sinf(m_scale * 0.1f));
-	p.WorldPos(sinf(m_scale), sinf(m_scale), sinf(m_scale));
+	p.Scale(2.0, 2.0, 2.0);
+	p.WorldPos(sinf(m_scale), sinf(m_scale), 200.0 * sinf(m_scale) + 500.0);
 	p.Rotate(sinf(m_scale) * 90.0f, sinf(m_scale) * 90.0f, sinf(m_scale) * 90.0f);
+	p.SetPerspectiveProj(30.0f, WINDOW_WIDTH, WINDOW_HEIGHT, 1.0f, 1000.0f);
 	glUniformMatrix4fv(gWorldLocation, 1, GL_TRUE, (const GLfloat*)p.GetTrans());
 
 	glClear(GL_COLOR_BUFFER_BIT);
