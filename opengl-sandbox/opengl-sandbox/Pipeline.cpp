@@ -29,95 +29,22 @@ void Pipeline::Rotate(float RotateX, float RotateY, float RotateZ)
 }
 
 
-const Matrix4f * Pipeline::GetTrans()
+const Matrix4f* Pipeline::GetTrans()
 {
-	Matrix4f ScaleTrans, RotateTrans, TranslationTrans, PerspectiveProj;
-	InitScaleTransform(ScaleTrans);
-	InitRotateTransform(RotateTrans);
-	InitTranslationTransform(TranslationTrans);
-	InitPerspectiveProj(PerspectiveProj);
-	m_transformation = PerspectiveProj * TranslationTrans * RotateTrans * ScaleTrans;
+	Matrix4f ScaleTrans, RotateTrans, TranslationTrans, CameraTranslationTrans, CameraRotateTrans, PersProjTrans;
+
+	ScaleTrans.InitScaleTransform(m_scale.x, m_scale.y, m_scale.z);
+	RotateTrans.InitRotateTransform(m_rotateInfo.x, m_rotateInfo.y, m_rotateInfo.z);
+	TranslationTrans.InitTranslationTransform(m_worldPos.x, m_worldPos.y, m_worldPos.z);
+	CameraTranslationTrans.InitTranslationTransform(-m_camera.Pos.x, -m_camera.Pos.y, -m_camera.Pos.z);
+	CameraRotateTrans.InitCameraTransform(m_camera.Target, m_camera.Up);
+	PersProjTrans.InitPersProjTransform(m_persProj.FOV, m_persProj.Width, m_persProj.Height, m_persProj.zNear, m_persProj.zFar);
+
+	m_transformation = PersProjTrans * CameraRotateTrans * CameraTranslationTrans * TranslationTrans * RotateTrans * ScaleTrans;
 	return &m_transformation;
 }
 
-void Pipeline::InitScaleTransform(Matrix4f &trans) {
 
-	trans.m[0][0] = m_scale.x;	trans.m[0][1] = 0.0f;		trans.m[0][2] = 0.0f;		trans.m[0][3] = 0.0f;
-	trans.m[1][0] = 0.0f;		trans.m[1][1] = m_scale.y;	trans.m[1][2] = 0.0f;		trans.m[1][3] = 0.0f;
-	trans.m[2][0] = 0.0f;		trans.m[2][1] = 0.0f;		trans.m[2][2] = m_scale.z;	trans.m[2][3] = 0.0f;
-	trans.m[3][0] = 0.0f;		trans.m[3][1] = 0.0f;		trans.m[3][2] = 0.0f;		trans.m[3][3] = 1.0f;
-}
-
-void Pipeline::InitRotateTransform(Matrix4f &trans) {
-	Matrix4f transX, transY, transZ;
-
-	InitXRotateTransform(transX);
-	InitYRotateTransform(transY);
-	InitZRotateTransform(transZ);
-	trans = transZ * transY * transX;
-}
-
-void Pipeline::InitXRotateTransform(Matrix4f & trans)
-{
-	trans.m[0][0] = 1.0f;	trans.m[0][1] = 0.0f;					trans.m[0][2] = 0.0f;					trans.m[0][3] = 0.0f;
-	trans.m[1][0] = 0.0f;	trans.m[1][1] = cosf(m_rotateInfo.x);	trans.m[1][2] = -sinf(m_rotateInfo.x);	trans.m[1][3] = 0.0f;
-	trans.m[2][0] = 0.0f;	trans.m[2][1] = sinf(m_rotateInfo.x);	trans.m[2][2] = cosf(m_rotateInfo.x);	trans.m[2][3] = 0.0f;
-	trans.m[3][0] = 0.0f;	trans.m[3][1] = 0.0f;					trans.m[3][2] = 0.0f;					trans.m[3][3] = 1.0f;
-}
-
-void Pipeline::InitYRotateTransform(Matrix4f & trans)
-{
-	trans.m[0][0] = cosf(m_rotateInfo.y);	trans.m[0][1] = 0.0f;	trans.m[0][2] = sinf(m_rotateInfo.y);	trans.m[0][3] = 0.0f;
-	trans.m[1][0] = 0.0f;					trans.m[1][1] = 1.0f;	trans.m[1][2] = 0.0f;					trans.m[1][3] = 0.0f;
-	trans.m[2][0] = -sinf(m_rotateInfo.y);	trans.m[2][1] = 0.0f;	trans.m[2][2] = cosf(m_rotateInfo.y);	trans.m[2][3] = 0.0f;
-	trans.m[3][0] = 0.0f;					trans.m[3][1] = 0.0f;	trans.m[3][2] = 0.0f;					trans.m[3][3] = 1.0f;
-}
-
-void Pipeline::InitZRotateTransform(Matrix4f & trans)
-{
-	trans.m[0][0] = cosf(m_rotateInfo.z);	trans.m[0][1] = -sinf(m_rotateInfo.z);	trans.m[0][2] = 0.0f;	trans.m[0][3] = 0.0f;
-	trans.m[1][0] = sinf(m_rotateInfo.z);	trans.m[1][1] = cosf(m_rotateInfo.z);	trans.m[1][2] = 0.0f;	trans.m[1][3] = 0.0f;
-	trans.m[2][0] = 0.0f;					trans.m[2][1] = 0.0f;					trans.m[2][2] = 1.0f;	trans.m[2][3] = 0.0f;
-	trans.m[3][0] = 0.0f;					trans.m[3][1] = 0.0f;					trans.m[3][2] = 0.0f;	trans.m[3][3] = 1.0f;
-}
-
-
-
-void Pipeline::InitTranslationTransform(Matrix4f &trans) {
-	trans.m[0][0] = 1.0f;	trans.m[0][1] = 0.0f;	trans.m[0][2] = 0.0f;	trans.m[0][3] = m_worldPos.x;
-	trans.m[1][0] = 0.0f;	trans.m[1][1] = 1.0f;	trans.m[1][2] = 0.0f;	trans.m[1][3] = m_worldPos.y;
-	trans.m[2][0] = 0.0f;	trans.m[2][1] = 0.0f;	trans.m[2][2] = 1.0f;	trans.m[2][3] = m_worldPos.z;
-	trans.m[3][0] = 0.0f;	trans.m[3][1] = 0.0f;	trans.m[3][2] = 0.0f;	trans.m[3][3] = 1.0f;
-}
-
-void Pipeline::InitPerspectiveProj(Matrix4f& m) const
-{
-	const float ar = m_persProj.Width / m_persProj.Height;
-	const float zNear = m_persProj.zNear;
-	const float zFar = m_persProj.zFar;
-	const float zRange = zNear - zFar;
-	const float tanHalfFOV = tanf(ToRadian(m_persProj.FOV / 2.0));
-
-	m.m[0][0] = 1.0f / (tanHalfFOV * ar);
-	m.m[0][1] = 0.0f;
-	m.m[0][2] = 0.0f;
-	m.m[0][3] = 0.0f;
-
-	m.m[1][0] = 0.0f;
-	m.m[1][1] = 1.0f / tanHalfFOV;
-	m.m[1][2] = 0.0f;
-	m.m[1][3] = 0.0f;
-
-	m.m[2][0] = 0.0f;
-	m.m[2][1] = 0.0f;
-	m.m[2][2] = (-zNear - zFar) / zRange;
-	m.m[2][3] = 2.0f * zFar * zNear / zRange;
-
-	m.m[3][0] = 0.0f;
-	m.m[3][1] = 0.0f;
-	m.m[3][2] = 1.0f;
-	m.m[3][3] = 0.0f;
-}
 
 void Pipeline::SetPerspectiveProj(float zNear, float width, float height, float fov, float zFar)
 {
@@ -126,4 +53,11 @@ void Pipeline::SetPerspectiveProj(float zNear, float width, float height, float 
 	m_persProj.Height = height;
 	m_persProj.FOV = fov;
 	m_persProj.zFar = zFar;
+}
+
+void Pipeline::SetCamera(Vector3f pos, Vector3f target, Vector3f up)
+{
+	m_camera.Pos = pos;
+	m_camera.Target = target;
+	m_camera.Up = up;
 }

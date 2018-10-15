@@ -42,9 +42,13 @@ void Renderer::Render()
 	GLuint gWorldLocation = ShaderUtils::GetUniformLocation("gWorld");
 
 	Pipeline p;
-	p.Scale(2.0, 2.0, 2.0);
-	p.WorldPos(sinf(m_scale), sinf(m_scale), 200.0 * sinf(m_scale) + 500.0);
+	p.Scale(1.0f, 1.0f, 1.0f);
+	p.WorldPos(136.0f, 1.0f, 300.0f);
 	p.Rotate(sinf(m_scale) * 90.0f, sinf(m_scale) * 90.0f, sinf(m_scale) * 90.0f);
+	Vector3f CameraPos(1.0f, 1.0f, -3.0f);
+	Vector3f CameraTarget(0.45f, 0.0f, 1.0f);
+	Vector3f CameraUp(0.0f, 1.0f, 0.0f);
+	p.SetCamera(CameraPos, CameraTarget, CameraUp);
 	p.SetPerspectiveProj(30.0f, WINDOW_WIDTH, WINDOW_HEIGHT, 1.0f, 1000.0f);
 	glUniformMatrix4fv(gWorldLocation, 1, GL_TRUE, (const GLfloat*)p.GetTrans());
 
