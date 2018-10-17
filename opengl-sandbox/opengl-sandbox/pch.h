@@ -17,10 +17,14 @@
 
 #include <GL/glut.h>
 #include "math_3d.h"
+#include "Camera.h"
 #include "Renderer.h"
 #include "GeometryUtils.h"
 #include "ShaderUtils.h"
 #include "Pipeline.h"
+
+
+
 
 
 #endif //PCH_H

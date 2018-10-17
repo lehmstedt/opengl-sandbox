@@ -56,6 +56,42 @@ struct Vector3f
 
 		return *this;
 	}
+
+	inline Vector3f operator*(const float & value) const
+	{
+		Vector3f vector;
+
+		vector.x = x * value;
+		vector.y = y * value;
+		vector.z = z * value;
+
+		return vector;
+	}
+
+	inline void operator*=(const float & value)
+	{
+		Vector3f vector;
+
+		x *= value;
+		y *= value;
+		z *= value;
+
+	}
+
+	inline void operator+=(const Vector3f & rightVec)
+	{
+		x += rightVec.x;
+		y += rightVec.y;
+		z += rightVec.z;
+	}
+
+	inline void operator-=(const Vector3f & rightVec)
+	{
+		x -= rightVec.x;
+		y -= rightVec.y;
+		z -= rightVec.z;
+
+	}
 };
 
 struct Matrix4f {

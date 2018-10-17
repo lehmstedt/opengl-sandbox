@@ -12,7 +12,6 @@ void processShaders() {
 
 int main(int argc, char ** argv)
 {
-
 	Renderer::Init(argc, argv);
 
 	GLenum res = glewInit();

@@ -5,6 +5,8 @@
 #define WINDOW_HEIGHT 1080
 
 float Renderer::m_scale = 0.0f;
+Camera * Renderer::m_camera;
+
 
 Renderer::Renderer()
 {
@@ -30,9 +32,20 @@ void Renderer::Init(int argc, char ** argv)
 
 	glutDisplayFunc(Render);
 	glutIdleFunc(Render);
+	glutSpecialFunc(SpecialKeyboardCB);
 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
+	Vector3f CameraPos(1.0f, 1.0f, -3.0f);
+	Vector3f CameraTarget(0.45f, 0.0f, 1.0f);
+	Vector3f CameraUp(0.0f, 1.0f, 0.0f);
+	m_camera = new Camera(CameraPos, CameraTarget, CameraUp);
+	
+}
+
+void Renderer::Close()
+{
+	delete m_camera;
 }
 
 void Renderer::Render()
@@ -45,10 +58,10 @@ void Renderer::Render()
 	p.Scale(1.0f, 1.0f, 1.0f);
 	p.WorldPos(136.0f, 1.0f, 300.0f);
 	p.Rotate(sinf(m_scale) * 90.0f, sinf(m_scale) * 90.0f, sinf(m_scale) * 90.0f);
-	Vector3f CameraPos(1.0f, 1.0f, -3.0f);
-	Vector3f CameraTarget(0.45f, 0.0f, 1.0f);
-	Vector3f CameraUp(0.0f, 1.0f, 0.0f);
-	p.SetCamera(CameraPos, CameraTarget, CameraUp);
+
+
+	p.SetCamera(m_camera->GetPos(), m_camera->GetTarget(), m_camera->GetUp());
+	std::cout << m_camera->GetPos().x << " " << m_camera->GetPos().y << " " << m_camera->GetPos().z << std::endl;
 	p.SetPerspectiveProj(30.0f, WINDOW_WIDTH, WINDOW_HEIGHT, 1.0f, 1000.0f);
 	glUniformMatrix4fv(gWorldLocation, 1, GL_TRUE, (const GLfloat*)p.GetTrans());
 
@@ -66,5 +79,10 @@ void Renderer::Render()
 	glDisableVertexAttribArray(0);
 
 	glutSwapBuffers();
+}
+
+void Renderer::SpecialKeyboardCB(int Key, int x, int y)
+{
+	m_camera->OnKeyboard(Key);
 }
 

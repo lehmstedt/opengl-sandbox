@@ -173,6 +173,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="GeometryUtils.h" />
     <ClInclude Include="math_3d.h" />
     <ClInclude Include="pch.h" />
@@ -181,6 +182,7 @@
     <ClInclude Include="ShaderUtils.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GeometryUtils.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp">
